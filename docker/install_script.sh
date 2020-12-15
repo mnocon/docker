@@ -3,14 +3,23 @@
 # Dumping autoload using --optimize-autoloader to keep performenace on a usable level, not needed on linux host.
 # Second chown line:  For dev and behat tests we give a bit extra rights, never do this for prod.
 
+s=0
 for i in $(seq 1 3); do
-    composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-scripts && s=0 && break || s=$? && sleep 1
+    composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+    yes | composer recipes:install --force
+
+    s=$?
+    if [ "$s" != "0" ]; then
+        sleep 1
+    fi
+    break
 done
+
+
 if [ "$s" != "0" ]; then
     echo "ERROR : composer install failed, exit code : $s"
     exit $s
 fi
-mkdir -p public/var
 
 if [ "${INSTALL_DATABASE}" == "1" ]; then 
     export DATABASE_URL=${DATABASE_PLATFORM}://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?serverVersion=${DATABASE_VERSION}
