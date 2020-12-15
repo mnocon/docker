@@ -1,6 +1,13 @@
 {
     "name": "mnocon/docker",
     "type": "library",
+    "license": "GPL-2.0-only",
+    "description": "Docker files for Ibexa DXP",
     "minimum-stability": "stable",
-    "require": {}
+    "require": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
