@@ -33,9 +33,3 @@ if [ "${INSTALL_DATABASE}" == "1" ]; then
     echo 'Dumping database into doc/docker/entrypoint/mysql/2_dump.sql for use by mysql on startup.'
     mysqldump -u $DATABASE_USER --password=$DATABASE_PASSWORD -h $DATABASE_HOST --add-drop-table --extended-insert  --protocol=tcp $DATABASE_NAME > doc/docker/entrypoint/mysql/2_dump.sql
 fi
-
-rm -Rf var/log/* var/cache/*/*
-chown -R www-data:www-data var/cache var/log public/var
-find var/cache var/log public/var -type d -print0 | xargs -0 chmod -R 775
-find var/cache var/log public/var -type f -print0 | xargs -0 chmod -R 664
-chown -R www-data:www-data config src
