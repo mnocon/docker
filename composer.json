@@ -1,0 +1,6 @@
+{
+    "name": "mnocon/docker",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {}
+}
