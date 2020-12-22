@@ -6,7 +6,6 @@
 s=0
 for i in $(seq 1 3); do
     composer install --no-progress --no-interaction --prefer-dist --optimize-autoloader --no-scripts
-    yes | composer recipes:install --force
 
     s=$?
     if [ "$s" != "0" ]; then
@@ -14,6 +13,11 @@ for i in $(seq 1 3); do
     fi
     break
 done
+
+# Avoid Composer/Flex asking interactive questions that cannot be automated
+git init
+git add .
+composer recipes:install --force
 
 
 if [ "$s" != "0" ]; then
